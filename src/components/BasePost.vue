@@ -11,10 +11,10 @@
           </div>
           <div class="post-header-informations-text">
             <p class="post-header-informations-text-author">
-              Nom d’utilisateur
+              {{ user }}
             </p>
             <p class="post-header-informations-text-published">
-              Publié le xx/xx/xxxx à xx:xx
+              Publié le {{ date }} à {{ time }}
             </p>
           </div>
         </div>
@@ -24,27 +24,19 @@
     </div>
     <div class="post-body">
       <p class="text-start">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-        explicabo ea quasi recusandae? Corporis sapiente ab, libero tempore
-        voluptatibus assumenda saepe quisquam voluptas expedita consequuntur ea
-        et debitis dolore inventore impedit maiores, asperiores possimus
-        laudantium beatae facilis quod. Placeat iure itaque, qui voluptate
-        possimus obcaecati. Minima quis tempora harum amet?
+        {{ content }}
       </p>
-      <img
-        src="https://images.unsplash.com/photo-1652767050717-42f222b0e86b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1478&q=80"
-        alt=""
-      />
+      <img :src="mediaUrl" alt="" />
     </div>
     <div class="post-interactions row">
       <div class="post-interactions-like col-4">
-        <p class="post-interactions-count">👍 12</p>
+        <p class="post-interactions-count">👍 {{ likes }}</p>
       </div>
       <div class="post-interactions-dislike col-4">
-        <p class="post-interactions-count">👎 12</p>
+        <p class="post-interactions-count">👎 {{ dislikes }}</p>
       </div>
       <div class="post-interactions-comment col-4">
-        <p class="post-interactions-count">💬 12</p>
+        <p class="post-interactions-count">💬 {{ comments }}</p>
       </div>
     </div>
     <input
@@ -58,6 +50,44 @@
 <script>
 export default {
   name: "BasePost",
+  // data: function () {
+  //   return {
+  //     user: "Utilisateur",
+  //   };
+  // },
+  props: {
+    user: {
+      type: String,
+      required: true,
+    },
+    date: {
+      type: String,
+      required: true,
+    },
+    time: {
+      type: String,
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
+    },
+    mediaUrl: {
+      type: String,
+    },
+    likes: {
+      type: Number,
+      default: 0,
+    },
+    dislikes: {
+      type: Number,
+      default: 0,
+    },
+    comments: {
+      type: Number,
+      default: 0,
+    },
+  },
 };
 </script>
 
