@@ -33,7 +33,7 @@
         <p class="post-interactions-count">👍 {{ likes }}</p>
       </div>
       <div class="post-interactions-comment col-6 text-center">
-        <p class="post-interactions-count">💬 {{ comments }}</p>
+        <p class="post-interactions-count">👎 {{ dislikes }}</p>
       </div>
     </div>
     <input
@@ -47,11 +47,6 @@
 <script>
 export default {
   name: "BasePost",
-  // data: function () {
-  //   return {
-  //     user: "Utilisateur",
-  //   };
-  // },
   props: {
     user: {
       type: String,
@@ -76,7 +71,7 @@ export default {
       type: Number,
       default: 0,
     },
-    comments: {
+    dislikes: {
       type: Number,
       default: 0,
     },

@@ -14,6 +14,8 @@
           class="posting-top-message"
           placeholder="Quoi de neuf, Utilisateur ?"
           style="height: 100px"
+          id="post_content"
+          v-model="post.content"
         ></textarea>
       </div>
       <div
@@ -23,7 +25,9 @@
           <button class="btn btn-secondary mx-1">📷 Partager une photo</button>
         </div>
         <div class="posting-bottom-btn col-12 col-md-6 d-grid mb-2 p-0">
-          <button class="btn btn-primary mx-1">Envoyer</button>
+          <button class="btn btn-primary mx-1" @click.prevent="createNewPost">
+            Envoyer
+          </button>
         </div>
       </div>
     </div>
@@ -31,8 +35,31 @@
 </template>
 
 <script>
+import { PostsService } from "@/services/PostsService";
 export default {
   name: "ThePostSharer",
+  data() {
+    return {
+      post: {
+        user_id: 3,
+        content: "",
+      },
+    };
+  },
+  methods: {
+    async createNewPost() {
+      try {
+        const credentials = {
+          user_id: this.post.user_id,
+          content: this.post.content,
+        };
+        await PostsService.createPost(credentials);
+        this.$router.push("/home");
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
 };
 </script>
 

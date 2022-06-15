@@ -3,7 +3,7 @@ import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
 import Home from "../views/Home.vue";
 import Profile from "../views/Profile.vue";
-import SinglePost from "../views/SinglePost.vue";
+// import SinglePost from "../views/SinglePost.vue";
 
 const routes = [
   {
@@ -20,17 +20,31 @@ const routes = [
     path: "/home",
     name: "home",
     component: Home,
+    beforeEnter: () => {
+      let token = localStorage.getItem("token");
+      if (token) {
+        return true;
+      }
+      router.push("/");
+    },
   },
   {
     path: "/profile",
     name: "profile",
     component: Profile,
+    beforeEnter: () => {
+      let token = localStorage.getItem("token");
+      if (token) {
+        return true;
+      }
+      router.push("/");
+    },
   },
-  {
-    path: "/post",
-    name: "post",
-    component: SinglePost,
-  },
+  // {
+  //   path: "/post",
+  //   name: "post",
+  //   component: SinglePost,
+  // },
 ];
 
 const router = createRouter({
