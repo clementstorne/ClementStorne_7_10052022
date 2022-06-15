@@ -1,19 +1,20 @@
 <template>
   <div class="home">
     <TheHeader />
-    <ThePostSharer />
-    <BasePost
-      v-for="post in posts"
-      :key="post.id"
-      :user="post.user"
-      :date="post.date"
-      :time="post.time"
-      :content="post.content"
-      :media-url="post.mediaUrl"
-      :likes="post.likes"
-      :dislikes="post.dislikes"
-      :comments="post.comments"
-    ></BasePost>
+    <div class="mx-2">
+      <ThePostSharer />
+      <BasePost
+        v-for="post in posts"
+        :key="post.id"
+        :user="post.user"
+        :date="post.date"
+        :time="post.time"
+        :content="post.content"
+        :media-url="post.mediaUrl"
+        :likes="post.likes"
+        :comments="post.comments"
+      ></BasePost>
+    </div>
   </div>
 </template>
 
@@ -39,9 +40,9 @@ export default {
           time: "08:20",
           content:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, numquam!",
-          mediaUrl: "https://media.giphy.com/media/WEBiysleGJC6Y/giphy.gif",
+          mediaUrl:
+            "https://images.unsplash.com/photo-1653491888857-6cb8c8f0264c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0OHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60",
           likes: 3,
-          dislikes: 4,
           comments: 5,
         },
         {
@@ -52,9 +53,8 @@ export default {
           content:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, numquam!",
           mediaUrl:
-            "https://images.unsplash.com/photo-1652894449003-11e4228e9ae7?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770",
+            "https://images.unsplash.com/photo-1653562970548-1b7cb5f3e589?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw4OXx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60",
           likes: 77,
-          dislikes: 1,
           comments: 25,
         },
         {
@@ -65,9 +65,8 @@ export default {
           content:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, numquam!",
           mediaUrl:
-            "https://media.giphy.com/media/lRpD28vbtrqq2zpaKS/giphy.gif",
+            "https://images.unsplash.com/photo-1653491889685-d68145b5abd1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5Nnx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60",
           likes: 2,
-          dislikes: 13,
           comments: 43,
         },
       ],

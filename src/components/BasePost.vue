@@ -29,13 +29,10 @@
       <img :src="mediaUrl" alt="" />
     </div>
     <div class="post-interactions row">
-      <div class="post-interactions-like col-4">
+      <div class="post-interactions-like col-6 text-center">
         <p class="post-interactions-count">👍 {{ likes }}</p>
       </div>
-      <div class="post-interactions-dislike col-4">
-        <p class="post-interactions-count">👎 {{ dislikes }}</p>
-      </div>
-      <div class="post-interactions-comment col-4">
+      <div class="post-interactions-comment col-6 text-center">
         <p class="post-interactions-count">💬 {{ comments }}</p>
       </div>
     </div>
@@ -79,10 +76,6 @@ export default {
       type: Number,
       default: 0,
     },
-    dislikes: {
-      type: Number,
-      default: 0,
-    },
     comments: {
       type: Number,
       default: 0,
@@ -93,7 +86,7 @@ export default {
 
 <style scoped lang="scss">
 .post {
-  background: #fff;
+  background: $white;
   border-radius: 9px;
   padding: 12px 16px 0;
   &-header {
@@ -118,10 +111,15 @@ export default {
           font-size: 18px;
           font-weight: 900;
           margin-bottom: 0;
+          color: $color-primary;
+          &:hover {
+            color: darken($color-primary, 5%);
+            cursor: pointer;
+          }
         }
         &-published {
           font-size: 12px;
-          color: #66686c;
+          color: $dark-gray;
           margin-bottom: 0;
         }
       }
@@ -137,22 +135,26 @@ export default {
     height: 34px;
     margin: 0;
     padding: 4px 0;
-    border-top: solid #ced0d4 1px;
-    border-bottom: solid #ced0d4 1px;
-    color: #6f7175;
+    border-top: solid $medium-gray 1px;
+    border-bottom: solid $medium-gray 1px;
+    color: $dark-gray;
     font-weight: 600;
     &-count:hover {
-      color: #ea4325;
+      color: $color-primary;
       font-weight: 900;
       cursor: pointer;
     }
   }
   &-comment {
     margin: 12px 0;
-    border-radius: 36px;
+    border-radius: 18px;
     padding: 8px 16px;
-    background: #f0f2f5;
+    background: $gray;
     border: none;
+    &:focus {
+      box-shadow: 0px 0px 0px 4px rgba($color-primary, 0.5);
+      outline: none;
+    }
   }
 }
 </style>

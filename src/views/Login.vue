@@ -1,16 +1,16 @@
 <template>
   <div class="login d-flex justify-content-center align-items-center">
-    <SignupForm />
+    <LoginForm />
   </div>
 </template>
 
 <script>
-import SignupForm from "@/components/SignupForm.vue";
+import LoginForm from "@/components/LoginForm.vue";
 
 export default {
-  name: "SignupView",
+  name: "LoginView",
   components: {
-    SignupForm,
+    LoginForm,
   },
 };
 </script>
@@ -18,7 +18,7 @@ export default {
 <style scoped lang="scss">
 .login {
   height: 100vh;
-  background-color: #294c60;
+  background-color: $color-tertiary;
   background: url(@/assets/LoginPageBackground.jpg) center no-repeat;
   background-size: cover;
 }
