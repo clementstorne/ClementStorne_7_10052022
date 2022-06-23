@@ -8,11 +8,21 @@ let createPost = (credentials) => {
   return Axios.post("/posts/", credentials);
 };
 
-let getAllPost = () => {
+let getAllPosts = () => {
   return Axios.get("/posts/");
+};
+
+let editPost = (postId, credentials) => {
+  return Axios.put(`/posts/${postId}`, credentials);
+};
+
+let deletePost = (postId) => {
+  return Axios.delete(`/posts/${postId}`);
 };
 
 export const PostsService = {
   createPost,
-  getAllPost,
+  getAllPosts,
+  editPost,
+  deletePost,
 };

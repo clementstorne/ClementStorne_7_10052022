@@ -1,28 +1,26 @@
 <template>
   <div id="profile">
-    <TheHeader />
     <div class="p-4">
-      <TheProfileModifier />
+      <TheProfileUpdate />
     </div>
   </div>
 </template>
 
 <script>
-import TheHeader from "@/components/TheHeader.vue";
-import TheProfileModifier from "@/components/TheProfileModifier.vue";
+import TheProfileUpdate from "@/components/TheProfileUpdate.vue";
 export default {
   name: "ProfileView",
   components: {
-    TheHeader,
-    TheProfileModifier,
+    TheProfileUpdate,
   },
 };
 </script>
 
 <style scoped lang="scss">
 #profile {
-  // height: 100vh;
+  height: 100%;
   background: #f0f2f5;
-  padding-bottom: 10px;
+  margin-top: 72px;
+  padding: 10px 0;
 }
 </style>

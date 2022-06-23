@@ -5,14 +5,11 @@
         class="posting-top d-flex flex-column align-items-center flex-md-row justify-content-start align-items-md-start py-3"
       >
         <div class="posting-top-profile-picture mb-2">
-          <img
-            src="@/assets/user-profile-picture.png"
-            alt="Photo de profil de l'utilisateur"
-          />
+          <img :src="user.imageUrl" alt="Photo de profil de l'utilisateur" />
         </div>
         <textarea
           class="posting-top-message"
-          placeholder="Quoi de neuf, Utilisateur ?"
+          :placeholder="`Quoi de neuf, ${user.firstname} ?`"
           style="height: 100px"
           id="post_content"
           v-model="post.content"
@@ -35,26 +32,40 @@
 </template>
 
 <script>
+import { UsersService } from "@/services/UsersService";
 import { PostsService } from "@/services/PostsService";
 export default {
   name: "ThePostSharer",
   data() {
     return {
+      user: {
+        id: 0,
+        firstname: "",
+        lastname: "",
+        email: "",
+        imageUrl: "",
+      },
       post: {
-        user_id: 3,
         content: "",
       },
     };
   },
+  created() {
+    UsersService.getUserData()
+      .then((res) => {
+        this.user = res.data.data;
+      })
+      .catch((err) => console.log(err));
+  },
   methods: {
     async createNewPost() {
+      this.$emit("newPostCreated", this.post.content);
       try {
         const credentials = {
-          user_id: this.post.user_id,
           content: this.post.content,
         };
         await PostsService.createPost(credentials);
-        this.$router.push("/home");
+        this.$router.go();
       } catch (err) {
         console.log(err);
       }
@@ -72,6 +83,8 @@ export default {
       & img {
         width: 40px;
         height: 40px;
+        object-fit: cover;
+        border-radius: 50%;
       }
     }
     &-message {
