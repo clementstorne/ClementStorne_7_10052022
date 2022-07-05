@@ -125,7 +125,6 @@ export default {
         this.isAuthor();
       })
       .catch((err) => console.log(err));
-    console.log(this.user.id);
   },
   methods: {
     isAuthor() {

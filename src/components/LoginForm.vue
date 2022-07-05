@@ -65,6 +65,7 @@ export default {
         };
         let res = await AuthService.login(credentials);
         await AuthService.saveToken(res.data.access_token);
+        console.log(localStorage.getItem("token"));
         this.$router.push("/home");
       } catch (err) {
         console.log(err);

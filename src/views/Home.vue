@@ -37,7 +37,7 @@ export default {
       posts: [],
     };
   },
-  beforeMount() {
+  mounted() {
     PostsService.getAllPosts()
       .then((res) => {
         this.posts = res.data.data;
