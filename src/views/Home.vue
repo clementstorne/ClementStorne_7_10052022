@@ -14,7 +14,9 @@
         :content="post.content"
         :media-url="post.mediaUrl"
         :likes="post.Likes.length"
+        :users-who-liked="post.Likes"
         :dislikes="post.Dislikes.length"
+        :users-who-disliked="post.Dislikes"
       ></BasePost>
     </div>
   </div>
@@ -47,6 +49,12 @@ export default {
   methods: {
     publishPost(data) {
       console.log(data);
+    },
+    usersWhoLiked() {
+      for (let post of this.posts) {
+        console.log(post.Likes);
+        post.Likes = post.Likes.map((item) => item.dataValues.UserId);
+      }
     },
   },
 };

@@ -6,10 +6,34 @@
     <div
       class="profile-picture d-flex flex-column justify-content-center align-items-center mt-3 mb-5"
     >
-      <img :src="user.imageUrl" alt="Photo de profil de l'utilisateur" />
-      <button class="btn btn-primary col-10 mt-3">
-        Modifier la photo de profil
-      </button>
+      <img
+        :src="imageBase64url"
+        alt="Photo de profil de l'utilisateur"
+        v-if="imageBase64url"
+      />
+      <img
+        :src="user.imageUrl"
+        alt="Photo de profil de l'utilisateur"
+        v-else-if="user.imageUrl"
+      />
+      <img
+        :src="defautlImageUrl"
+        alt="Photo de profil de l'utilisateur"
+        v-else
+      />
+      <div class="profile-picture-btn col-10">
+        <input
+          type="file"
+          name="image"
+          id=""
+          accept="image/png, image/jpg, image/jpeg"
+          class="profile-picture-btn-input"
+          @change="setBase64urlImage"
+        />
+        <button class="btn btn-primary col-12 mt-3">
+          Modifier la photo de profil
+        </button>
+      </div>
     </div>
     <div class="profile-email mb-5 text-center">
       <div class="mb-2">
@@ -19,6 +43,7 @@
           class="form-control"
           id="email"
           :placeholder="user.email"
+          v-model="user.email"
         />
       </div>
     </div>
@@ -30,25 +55,49 @@
           class="form-control"
           id="password"
           placeholder="********"
+          v-model="user.password"
         />
       </div>
     </div>
 
-    <button class="btn btn-primary col-12 mb-3">
+    <button class="btn btn-primary col-12 mb-3" @click="updateProfile">
       Mettre à jour les informations
     </button>
 
     <div class="profile-delete mb-2">
-      <button class="btn btn-secondary col-12">Supprimer le compte</button>
+      <button class="btn btn-secondary col-12" @click="showConfirmationBlock">
+        <!-- <button class="btn btn-secondary col-12" @click="deleteProfile"> -->
+        Supprimer le compte
+      </button>
     </div>
+
+    <AlertBlock
+      :revealAlert="revealAlert"
+      :toggleAlert="toggleAlert"
+      :messageAlert="messageAlert"
+    />
+    <ConfirmationBlock
+      :revealConfirmation="revealConfirmation"
+      :toggleConfirmation="toggleConfirmation"
+      :messageConfirmation="messageConfirmation"
+      @action="deleteProfile"
+    />
   </div>
 </template>
 
 <script>
+import AlertBlock from "@/components/AlertBlock.vue";
+import ConfirmationBlock from "@/components/ConfirmationBlock.vue";
+
 import { UsersService } from "@/services/UsersService";
+import profilePicture from "@/assets/user-profile-picture.png";
 
 export default {
   name: "TheProfileUpdate",
+  components: {
+    AlertBlock,
+    ConfirmationBlock,
+  },
   data() {
     return {
       user: {
@@ -56,8 +105,16 @@ export default {
         firstname: "",
         lastname: "",
         email: "",
+        password: "",
         imageUrl: "",
       },
+      imageBase64url: "",
+      defautlImageUrl: profilePicture,
+      imageFile: null,
+      revealAlert: false,
+      messageAlert: "",
+      revealConfirmation: false,
+      messageConfirmation: "",
     };
   },
   beforeMount() {
@@ -66,6 +123,46 @@ export default {
         this.user = res.data.data;
       })
       .catch((err) => console.log(err));
+  },
+  methods: {
+    setBase64urlImage(e) {
+      this.imageFile = e.target.files[0];
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(this.imageFile);
+      fileReader.addEventListener("load", () => {
+        this.imageBase64url = fileReader.result;
+      });
+    },
+    updateProfile() {
+      const formData = new FormData();
+      if (this.imageFile) {
+        formData.append("image", this.imageFile);
+      }
+      if (this.user.email) {
+        formData.append("email", this.user.email);
+      }
+      if (this.user.password) {
+        formData.append("password", this.user.password);
+      }
+      UsersService.updateProfile(formData, this.user.id);
+      this.messageAlert = "Le profil a été mis à jour";
+      this.revealAlert = !this.revealAlert;
+    },
+    toggleAlert() {
+      this.revealAlert = !this.revealAlert;
+    },
+    showConfirmationBlock() {
+      this.messageConfirmation =
+        "Êtes-vous sûr de vouloir supprimer votre profil ?";
+      this.revealConfirmation = !this.revealConfirmation;
+    },
+    deleteProfile() {
+      UsersService.deleteProfile(this.user.id);
+      this.$router.push("/");
+    },
+    toggleConfirmation() {
+      this.revealConfirmation = !this.revealConfirmation;
+    },
   },
 };
 </script>
@@ -80,6 +177,19 @@ export default {
       height: 150px;
       object-fit: cover;
       border-radius: 50%;
+    }
+    &-btn {
+      position: relative;
+      overflow: hidden;
+      &-input {
+        position: absolute;
+        font-size: 50px;
+        opacity: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+      }
     }
   }
 }

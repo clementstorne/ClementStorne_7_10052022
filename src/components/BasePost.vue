@@ -31,7 +31,6 @@
           >
         </div>
       </div>
-      <div class="post-parameters"></div>
     </div>
     <div class="post-body">
       <p class="text-start">
@@ -42,7 +41,9 @@
     <div class="post-interactions row">
       <div class="post-interactions-like col-6 text-center">
         <p class="post-interactions-count" @click.prevent="addLike">
-          👍 {{ likes }}
+          👍
+          <span v-if="liked" class="liked">{{ likes }}</span>
+          <span v-else> {{ likes }}</span>
         </p>
       </div>
       <div class="post-interactions-comment col-6 text-center">
@@ -76,6 +77,7 @@ export default {
         imageUrl: "",
       },
       isAllowed: false,
+      liked: false,
     };
   },
   props: {
@@ -113,9 +115,15 @@ export default {
       type: Number,
       default: 0,
     },
+    usersWhoLiked: {
+      type: Array,
+    },
     dislikes: {
       type: Number,
       default: 0,
+    },
+    usersWhoDisliked: {
+      type: Array,
     },
   },
   beforeMount() {
@@ -123,6 +131,7 @@ export default {
       .then((res) => {
         this.user = res.data.data;
         this.isAuthor();
+        this.doUserLike();
       })
       .catch((err) => console.log(err));
   },
@@ -130,6 +139,13 @@ export default {
     isAuthor() {
       if (this.userId === this.user.id) {
         this.isAllowed = true;
+      }
+    },
+    doUserLike() {
+      // console.log(this.usersWhoLiked);
+      if (this.usersWhoLiked.indexOf(this.user.id) !== -1) {
+        this.liked = true;
+        // console.log(this.liked);
       }
     },
     dateFormat: (date) => {
@@ -272,5 +288,10 @@ export default {
       outline: none;
     }
   }
+}
+
+.liked {
+  color: $color-primary;
+  font-weight: 900;
 }
 </style>

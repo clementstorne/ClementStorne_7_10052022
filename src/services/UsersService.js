@@ -8,21 +8,16 @@ let getUserData = () => {
   return Axios.get("/users/activeUser");
 };
 
-let changeProfilePicture = (newProfilePictureUrl) => {
-  return Axios.put("/users/", newProfilePictureUrl);
+let updateProfile = (formData, userId) => {
+  return Axios.put("/users/" + userId, formData);
 };
 
-let changeEmail = (newEmail) => {
-  return Axios.put("/users/", newEmail);
-};
-
-let changePassword = (newPassword) => {
-  return Axios.put("/users/", newPassword);
+let deleteProfile = (userId) => {
+  return Axios.delete("/users/" + userId);
 };
 
 export const UsersService = {
   getUserData,
-  changeProfilePicture,
-  changeEmail,
-  changePassword,
+  updateProfile,
+  deleteProfile,
 };

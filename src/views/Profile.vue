@@ -18,7 +18,7 @@ export default {
 
 <style scoped lang="scss">
 #profile {
-  height: 100%;
+  height: calc(100vh - 91.2px);
   background: #f0f2f5;
   margin-top: 72px;
   padding: 10px 0;
